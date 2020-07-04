@@ -14,10 +14,10 @@ module Users
       end
     end
 
-    def destroy
-      current_resource.destroy
-      json_response 'Usuário excluído!', true, {}, :ok
-    end
+    # def destroy
+    #   current_resource.destroy
+    #   json_response 'Usuário excluído!', true, {}, :ok
+    # end
 
     private
 
