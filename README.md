@@ -1,24 +1,20 @@
-# README
+# Haddock Education API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> Aplicação back end para o projeto Haddock Education.
 
-Things you may want to cover:
+O projeto Haddock Education é uma plataforma onde profissionais que atuam em rebocadores podem, de forma colaborativa, sanar dúvidas com relação a operações de trabalho, sejam elas críticas ou não.
+Este repositório contém o código back end da aplicação, escrito em Ruby on Rails.
 
-* Ruby version
 
-* System dependencies
+## Linguagem
 
-* Configuration
+- Ruby
 
-* Database creation
 
-* Database initialization
+## Autor
 
-* How to run the test suite
+👤 **Hugo Passos**
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Github: [@githubhandle](https://github.com/hugopassos)
+- Twitter: [@twitterhandle](https://twitter.com/hugopassos88)
+- Linkedin: [linkedin](https://www.linkedin.com/in/hugopassos88/)

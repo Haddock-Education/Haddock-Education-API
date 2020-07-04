@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2020_07_04_001751) do
     t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "points", default: 0
+    t.integer "total_points", default: 0
   end
 
   add_foreign_key "blacklisted_tokens", "users"
