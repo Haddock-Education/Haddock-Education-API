@@ -3,6 +3,7 @@
 > Aplicação back end para o projeto Haddock Education.
 
 O projeto Haddock Education é uma plataforma onde profissionais que atuam em rebocadores podem, de forma colaborativa, sanar dúvidas com relação a operações de trabalho, sejam elas críticas ou não.
+Este repositório contém o código back end da aplicação, escrito em Ruby on Rails.
 
 
 ## Linguagem
