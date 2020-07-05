@@ -8,7 +8,12 @@ module Users
     def create
       if resource.authenticate(user_params[:password])
         create_token_and_set_header(resource, resource_name)
-        json_response 'Bem vindo!', true, { user: resource }, :ok
+
+        token = response.header.select do |key, value|
+          ['Access-Token', 'Refresh-Token', 'Expire-At'].include?(key)
+        end
+
+        json_response 'Bem vindo!', true, { user: resource, token: token }, :ok
       else
         json_response 'Usuário ou senha inválidos.', false, {}, :unauthorized
       end

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_213007) do
+ActiveRecord::Schema.define(version: 2020_07_05_032813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.string "text", null: false
+    t.bigint "question_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
+  end
 
   create_table "blacklisted_tokens", force: :cascade do |t|
     t.string "token"
@@ -56,9 +66,12 @@ ActiveRecord::Schema.define(version: 2020_07_04_213007) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "total_points", default: 0
     t.bigint "role_id", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "users"
   add_foreign_key "blacklisted_tokens", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "refresh_tokens", "users"
