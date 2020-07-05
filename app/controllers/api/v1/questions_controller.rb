@@ -35,7 +35,7 @@ class Api::V1::QuestionsController < ApplicationController
     answers = Answer.where(question_id: question.id)
 
     if question
-      json_response 'Detalhes da pergunta.', true, { question: question }, :ok
+      json_response 'Detalhes da pergunta.', true, { question: question.serialize }, :ok
     else
       json_response 'Algo deu errado.', false, {}, :not_found
     end
