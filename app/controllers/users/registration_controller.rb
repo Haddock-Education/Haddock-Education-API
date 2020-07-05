@@ -8,7 +8,12 @@ module Users
       init_resource(sign_up_params)
       if resource.save
         create_token_and_set_header(resource, resource_name)
-        json_response 'Cadastro realizado com sucesso!', true, { user: resource }, :ok
+
+        token = response.header.select do |key, value|
+          ['Access-Token', 'Refresh-Token', 'Expire-At'].include?(key)
+        end
+
+        json_response 'Cadastro realizado com sucesso!', true, { user: resource, token: token }, :ok
       else
         json_response 'Algo deu errado', false, {}, :unprocessable_entity
       end
