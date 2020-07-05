@@ -3,7 +3,7 @@ class QuestionSerializer < ActiveModel::Serializer
   attribute :title
   attribute :text
   attribute :user_id
-  attribute :answer
+  attribute :answers
 
   def answer
     object.answers

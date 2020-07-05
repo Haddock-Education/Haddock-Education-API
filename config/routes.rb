@@ -14,7 +14,7 @@ Rails.application.routes.draw do
         get :questions, to: 'questions#index_own'
       end
       resources :questions do
-        resources :answers
+        resources :answers, except: :index
       end
     end
   end
