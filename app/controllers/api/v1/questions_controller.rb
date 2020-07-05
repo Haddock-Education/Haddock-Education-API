@@ -10,7 +10,7 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def index_own
-    questions = Question.find_by(user_id: @current_user.id)
+    questions = Question.where(user_id: @current_user.id)
 
     if questions
       json_response 'Minhas perguntas.', true, { questions: questions }, :ok
@@ -32,6 +32,7 @@ class Api::V1::QuestionsController < ApplicationController
 
   def show
     question = Question.find_by(id: params[:id])
+    answers = Answer.where(question_id: question.id)
 
     if question
       json_response 'Detalhes da pergunta.', true, { question: question }, :ok
