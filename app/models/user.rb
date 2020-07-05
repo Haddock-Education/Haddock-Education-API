@@ -7,4 +7,12 @@ class User < ApplicationRecord
   has_many :answers
 
   has_secure_password
+
+  def self.top_three
+    User.all.order(total_points: :desc).limit(3)
+  end
+
+  def my_ranking
+    User.all.order(total_points: :desc).pluck(:id).index(self.id) + 1
+  end
 end

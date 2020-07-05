@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       resources :questions do
         resources :answers, except: :index
       end
+
+      get '/rankings', to: 'rankings#top_three'
+      get '/my_ranking', to: 'rankings#my_ranking'
     end
   end
 
