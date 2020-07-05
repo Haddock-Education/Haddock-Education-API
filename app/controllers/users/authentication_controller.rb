@@ -13,6 +13,8 @@ module Users
           ['Access-Token', 'Refresh-Token', 'Expire-At'].include?(key)
         end
 
+        token.transform_keys! { |key| key.downcase.tr('-', '') }
+
         json_response 'Bem vindo!', true, { user: resource, token: token }, :ok
       else
         json_response 'Usuário ou senha inválidos.', false, {}, :unauthorized
