@@ -41,13 +41,27 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def update
-    if @current_user.id == params[:user_id]
+    if @current_user.id == params[:user_id].to_i
       question = Question.find_by(id: params[:id])
 
       if question&.update(question_params)
         json_response 'Sua pergunta foi atualizada!', true, { question: question }, :ok
       else
         json_response 'Algo deu errado.', false, {}, :unprocessable_entity
+      end
+    else
+      json_response 'Não possui permissão para essa operação.', false, {}, :unauthorized
+    end
+  end
+
+  def destroy
+    if @current_user.id == params[:user_id].to_i
+      question = Question.find_by(id: params[:id])
+
+      if question&.delete
+        json_response 'Sua pergunta foi excluída!', true, {}, :ok
+      else
+        json_response 'Algo deu errado.', false, { question: question }, :unprocessable_entity
       end
     else
       json_response 'Não possui permissão para essa operação.', false, {}, :unauthorized
