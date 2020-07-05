@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :users
+      resources :users, except: :delete do
+        resources :questions
+      end
+
+      get :questions, to: 'questions#index_all'
     end
   end
 
