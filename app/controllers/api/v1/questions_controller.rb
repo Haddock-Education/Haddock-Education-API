@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < ApplicationController
-  def index_all
+  def index
     questions = Question.all
 
     if questions
@@ -9,8 +9,8 @@ class Api::V1::QuestionsController < ApplicationController
     end
   end
 
-  def index
-    questions = Question.find_by(user_id: params[:user_id])
+  def index_own
+    questions = Question.where(user_id: @current_user.id)
 
     if questions
       json_response 'Minhas perguntas.', true, { questions: questions }, :ok
@@ -32,39 +32,32 @@ class Api::V1::QuestionsController < ApplicationController
 
   def show
     question = Question.find_by(id: params[:id])
+    answers = Answer.where(question_id: question.id)
 
     if question
-      json_response 'Detalhes da pergunta.', true, { question: question }, :ok
+      json_response 'Detalhes da pergunta.', true, { question: question.serialize }, :ok
     else
       json_response 'Algo deu errado.', false, {}, :not_found
     end
   end
 
   def update
-    if @current_user.id == params[:user_id].to_i
-      question = Question.find_by(id: params[:id])
+    question = Question.find_by(id: params[:id])
 
-      if question&.update(question_params)
-        json_response 'Sua pergunta foi atualizada!', true, { question: question }, :ok
-      else
-        json_response 'Algo deu errado.', false, {}, :unprocessable_entity
-      end
+    if question && question.user_id == @current_user.id && question.update(question_params)
+      json_response 'Sua pergunta foi atualizada!', true, { question: question }, :ok
     else
-      json_response 'Não possui permissão para essa operação.', false, {}, :unauthorized
+      json_response 'Algo deu errado.', false, {}, :unprocessable_entity
     end
   end
 
   def destroy
-    if @current_user.id == params[:user_id].to_i
-      question = Question.find_by(id: params[:id])
+    question = Question.find_by(id: params[:id])
 
-      if question&.delete
-        json_response 'Sua pergunta foi excluída!', true, {}, :ok
-      else
-        json_response 'Algo deu errado.', false, { question: question }, :unprocessable_entity
-      end
+    if question && question.user_id == @current_user.id && question.destroy
+      json_response 'Sua pergunta foi excluída!', true, {}, :ok
     else
-      json_response 'Não possui permissão para essa operação.', false, {}, :unauthorized
+      json_response 'Algo deu errado.', false, { question: question }, :unprocessable_entity
     end
   end
 
