@@ -15,4 +15,8 @@ class User < ApplicationRecord
   def my_ranking
     User.all.order(total_points: :desc).pluck(:id).index(self.id) + 1
   end
+
+  def add_points(quantity)
+    self.update(total_points: self.total_points + quantity)
+  end
 end

@@ -4,6 +4,7 @@ class Api::V1::AnswersController < ApplicationController
     answer.update(question_id: params[:question_id], user_id: @current_user.id)
 
     if answer.save
+      @current_user.add_points(20)
       json_response 'Sua resposta foi enviada!', true, { answer: answer }, :ok
     else
       json_response 'Algo deu errado.', false, {}, :unprocessable_entity
@@ -34,6 +35,7 @@ class Api::V1::AnswersController < ApplicationController
     answer = Answer.find_by(id: params[:id])
 
     if answer && answer.user_id == @current_user.id && answer.destroy
+      @current_user.add_points(-20)
       json_response 'Sua resposta foi excluída!', true, {}, :ok
     else
       json_response 'Algo deu errado.', false, { answer: answer }, :unprocessable_entity

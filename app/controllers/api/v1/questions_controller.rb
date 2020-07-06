@@ -24,6 +24,7 @@ class Api::V1::QuestionsController < ApplicationController
     question.update(user_id: @current_user.id)
 
     if question.save
+      @current_user.add_points(10)
       json_response 'Sua pergunta foi enviada!', true, { question: question }, :ok
     else
       json_response 'Algo deu errado.', false, {}, :unprocessable_entity
@@ -55,6 +56,7 @@ class Api::V1::QuestionsController < ApplicationController
     question = Question.find_by(id: params[:id])
 
     if question && question.user_id == @current_user.id && question.destroy
+      @current_user.add_points(-10)
       json_response 'Sua pergunta foi excluída!', true, {}, :ok
     else
       json_response 'Algo deu errado.', false, { question: question }, :unprocessable_entity
